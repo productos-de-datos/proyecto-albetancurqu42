@@ -23,8 +23,8 @@ def compute_monthly_prices(source_path=cleansed_path, target_path=business_path)
     df_hourly_prices = read_format_hourly_prices(source_path)
 
     df_monthly_prices = resample_hourly_prices(df_hourly_prices, freq='MS')
-    print(df_monthly_prices)
-    df_monthly_prices.to_csv(target_path.joinpath('precios-diarios.csv'))
+
+    df_monthly_prices.to_csv(target_path.joinpath('precios-mensuales.csv'))
 
 
 if __name__ == "__main__":
