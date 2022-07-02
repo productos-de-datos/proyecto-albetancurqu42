@@ -1,9 +1,8 @@
 import json
 import pathlib
+import requests
 
-# PATH_CONFIG_FILES = pathlib.Path().absolute().joinpath('configuracion')
-
-PATH_CONFIG_FILES = './src/config/'
+PATH_CONFIG_FILES = pathlib.Path(__file__).parent.resolve().parent.joinpath('config')
 
 
 def initialize_reading_configuration_json(filename_config, config_base_path=None):
@@ -32,3 +31,14 @@ def make_folder(folder_name: pathlib.Path):
     except FileNotFoundError:
         print(f'''The folder structure is not correct, the parent folder of {folder_name} is not
          created ''')
+
+
+def download_file_from_url(url, storage_path):
+    response = requests.get(url)
+    if response.status_code == 404:
+        print(f'The url is not valid: {url}')
+
+    elif response.status_code == 200:
+        output = open(storage_path, 'wb')
+        output.write(response.content)
+        output.close()

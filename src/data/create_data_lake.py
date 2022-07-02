@@ -1,17 +1,27 @@
 import pathlib
+import utils
 
-from src.utils import make_folder
+
+datalake_config = utils.initialize_reading_configuration_json(
+    filename_config='config_datalake.json'
+)
+initial_folder_structure = utils.read_property_from_config(
+    config=datalake_config,
+    section_name='initial_structure',
+    parameter_name='path_list'
+)
 
 
-def create_data_lake(folder_structure):
+def create_data_lake(folder_structure=initial_folder_structure):
+    # TODO: Escribir docstring
     """This function allows to create the initial folder structure of the datalake defined
-    in the 'initial_structure' parameter of the configuration file
-    ./src/config/config_initial_datalake_folder_structure.json
+    in the 'initial_structure' parameter of the configuration file ./src/config/config_datalake.json
     """
-
+    print('ok')
     for folder in folder_structure:
+        print(folder_structure)
         folder = pathlib.Path(folder)
-        make_folder(folder)
+        utils.make_folder(folder)
 
 
 if __name__ == "__main__":

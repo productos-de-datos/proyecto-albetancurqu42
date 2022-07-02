@@ -1,7 +1,7 @@
 def compute_daily_prices():
     """Compute los precios promedios diarios.
 
-    Usando el archivo data_lake/cleansed/precios-horarios.csv, compute el prcio
+    Usando el archivo data_lake/cleansed/precios-horarios.csv, compute el precio
     promedio diario (sobre las 24 horas del dia) para cada uno de los dias. Las
     columnas del archivo data_lake/business/precios-diarios.csv son:
 
