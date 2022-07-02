@@ -24,9 +24,10 @@ def create_data_lake():
         folder = pathlib.Path(folder)
         utils.make_folder(folder)
 
-create_data_lake()
+
 
 if __name__ == "__main__":
     import doctest
 
+    create_data_lake()
     doctest.testmod()

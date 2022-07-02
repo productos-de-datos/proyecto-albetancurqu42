@@ -18,11 +18,11 @@ raw_data_base_url = utils.read_property_from_config(
     parameter_name='base_url'
 )
 
-landing_path = pathlib.Path('./data_lake/landing')
+landing_path = pathlib.Path.cwd().parent.parent.joinpath('data_lake/landing')
 
 
 def ingest_data(
-        base_url=raw_data_base_url, initial_year: str = '1995', final_year: str = '2021',
+        base_url=raw_data_base_url, initial_year: str = '1996', final_year: str = '2021',
         storage_base_path=landing_path
 ):
     # TODO: Escribir docstring
@@ -42,11 +42,16 @@ def ingest_data(
         storage_path = storage_base_path.joinpath(f'{year}.xlsx')
 
         if not storage_path.is_file():
-            utils.download_file_from_url(download_url, storage_path)
+            try:
+                utils.download_file_from_url(download_url, str(storage_path))
+            except Exception:
+                download_url = f'{base_url}/{year}.xls'
+                storage_path = storage_path.with_suffix('.xls')
+                utils.download_file_from_url(download_url, str(storage_path))
 
-ingest_data()
 
 if __name__ == "__main__":
     import doctest
 
+    ingest_data()
     doctest.testmod()

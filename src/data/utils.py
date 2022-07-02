@@ -35,8 +35,9 @@ def make_folder(folder_name: pathlib.Path):
 
 def download_file_from_url(url, storage_path):
     response = requests.get(url)
+
     if response.status_code == 404:
-        print(f'The url is not valid: {url}')
+        raise Exception(f'The url is not valid: {url}')
 
     elif response.status_code == 200:
         output = open(storage_path, 'wb')

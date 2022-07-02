@@ -13,6 +13,6 @@
     ]
   },
   "data_source": {
-    "base_url": "https://raw.githubusercontent.com/jdvelasq/datalabs/master/datasets/precio_bolsa_nacional/xls"
+    "base_url": "https://github.com/jdvelasq/datalabs/raw/master/datasets/precio_bolsa_nacional/xls"
   }
 }
