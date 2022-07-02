@@ -7,7 +7,7 @@ import pathlib
 
 import pandas as pd
 
-from src.data import utils
+import utils
 
 datalake_config = utils.initialize_reading_configuration_json(
     filename_config='config_datalake.json'
@@ -18,7 +18,7 @@ raw_data_base_url = utils.read_property_from_config(
     parameter_name='base_url'
 )
 
-landing_path = pathlib.Path.cwd().parent.parent.joinpath('data_lake/landing')
+landing_path = pathlib.Path.cwd().joinpath('data_lake/landing')
 
 
 def ingest_data(

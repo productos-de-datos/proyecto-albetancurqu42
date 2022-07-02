@@ -1,5 +1,3 @@
-print('aa')
-
 import pathlib
 import utils
 
@@ -23,7 +21,6 @@ def create_data_lake():
         print(folder)
         folder = pathlib.Path(folder)
         utils.make_folder(folder)
-
 
 
 if __name__ == "__main__":
