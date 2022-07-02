@@ -14,16 +14,36 @@ def read_prepare_csv(file):
     return df_raw
 
 
-def stack_dataframe(df_pivot):
-    df_stack = df_pivot.copy()
+def stack_dataframe(df_source):
+
+    df_stack = df_source.copy()
+
     df_stack = df_stack.stack()
     df_stack = df_stack.reset_index(level=[0, 1])
+
     df_stack['level_0'] += pd.to_timedelta(df_stack.level_1, unit='h')
     df_stack = df_stack.set_index('level_0')
     df_stack = df_stack.drop(columns='level_1')
-    df_stack.columns = ['price']
-    df_stack.index.name = None
+
+    df_stack.columns = ['precio']
+    df_stack.index.name = 'fecha'
+
     return df_stack
+
+
+def format_dataframe_prices(df_source):
+    df_price = df_source.copy()
+
+    df_price = df_price.asfreq('H')
+
+    df_price.loc[:, 'hora'] = df_price.index.hour
+    df_price.loc[:, 'hora'] = df_price.loc[:, 'hora'].astype(str)
+    df_price.loc[:, 'hora'] = df_price.loc[:, 'hora'].str.zfill(2)
+
+    df_price.index.name = 'fecha'
+    df_price = df_price.filter(['hora', 'precio'], axis=1)
+
+    return df_price
 
 
 def clean_data(source_path=raw_path, target_path=cleansed_path):
@@ -41,7 +61,7 @@ def clean_data(source_path=raw_path, target_path=cleansed_path):
 
     list_csv_files = sorted(list(source_path.glob('*.csv')))
 
-    df_price = pd.DataFrame(columns=['price'])
+    df_price = pd.DataFrame(columns=['precio'])
 
     for excel_file in list_csv_files:
         df_raw = read_prepare_csv(excel_file)
@@ -50,7 +70,7 @@ def clean_data(source_path=raw_path, target_path=cleansed_path):
 
         df_price = pd.concat([df_price, df_stack], axis=0)
 
-    df_price = df_price.asfreq('H')
+    df_price = format_dataframe_prices(df_price)
 
     df_price.to_csv(target_path.joinpath('precios-horarios.csv'))
 
