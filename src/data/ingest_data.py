@@ -44,6 +44,7 @@ def ingest_data(
         if not storage_path.is_file():
             utils.download_file_from_url(download_url, storage_path)
 
+ingest_data()
 
 if __name__ == "__main__":
     import doctest
