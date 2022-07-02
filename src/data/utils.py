@@ -2,6 +2,8 @@ import json
 import pathlib
 import requests
 
+import pandas as pd
+
 PATH_CONFIG_FILES = pathlib.Path(__file__).parent.resolve().parent.joinpath('config')
 
 
@@ -43,3 +45,17 @@ def download_file_from_url(url, storage_path):
         output = open(str(storage_path), 'wb')
         output.write(response.content)
         output.close()
+
+
+def read_format_hourly_prices(source_path, filename='precios-horarios.csv'):
+    df_source = pd.read_csv(source_path.joinpath(filename), index_col=0)
+    df_source.index = pd.to_datetime(df_source.index)
+    df_source.index += pd.to_timedelta(df_source.hora, unit='h')
+    df_source = df_source.drop(columns=['hora'])
+    return df_source
+
+
+def resample_hourly_prices(df_source, freq):
+    df_target = df_source.copy()
+    df_target = df_target.resample(freq).mean()
+    return df_target
