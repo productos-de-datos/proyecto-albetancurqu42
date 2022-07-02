@@ -1,27 +1,17 @@
-def create_data_lake():
-    """Cree el data lake con sus capas.
+import pathlib
 
-    Esta función debe crear la carpeta `data_lake` en la raiz del proyecto. El data lake contiene
-    las siguientes subcarpetas:
-
-    ```
-    .
-    |
-    \___ data_lake/
-         |___ landing/
-         |___ raw/
-         |___ cleansed/
-         \___ business/
-              |___ reports/
-              |    |___ figures/
-              |___ features/
-              |___ forecasts/
-
-    ```
+from src.utils import make_folder
 
 
+def create_data_lake(folder_structure):
+    """This function allows to create the initial folder structure of the datalake defined
+    in the 'initial_structure' parameter of the configuration file
+    ./src/config/config_initial_datalake_folder_structure.json
     """
-    raise NotImplementedError("Implementar esta función")
+
+    for folder in folder_structure:
+        folder = pathlib.Path(folder)
+        make_folder(folder)
 
 
 if __name__ == "__main__":
