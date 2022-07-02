@@ -22,7 +22,7 @@ landing_path = pathlib.Path.cwd().joinpath('data_lake/landing')
 
 
 def ingest_data(
-        base_url=raw_data_base_url, initial_year: str = '1996', final_year: str = '2021',
+        base_url=raw_data_base_url, initial_year: str = '1995', final_year: str = '2021',
         storage_base_path=landing_path
 ):
     # TODO: Escribir docstring
@@ -37,17 +37,17 @@ def ingest_data(
     date_range = pd.date_range(initial_year, final_year, freq='AS')
 
     for year in date_range.year:
+        try:
+            download_url = f'{base_url}/{year}.xlsx'
+            storage_path = storage_base_path.joinpath(f'{year}.xlsx')
+            if not storage_path.is_file():
+                utils.download_file_from_url(download_url, storage_path)
 
-        download_url = f'{base_url}/{year}.xlsx'
-        storage_path = storage_base_path.joinpath(f'{year}.xlsx')
-
-        if not storage_path.is_file():
-            try:
-                utils.download_file_from_url(download_url, str(storage_path))
-            except Exception:
-                download_url = f'{base_url}/{year}.xls'
-                storage_path = storage_path.with_suffix('.xls')
-                utils.download_file_from_url(download_url, str(storage_path))
+        except Exception:
+            download_url = f'{base_url}/{year}.xls'
+            storage_path = storage_base_path.joinpath(f'{year}.xls')
+            if not storage_path.is_file():
+                utils.download_file_from_url(download_url, storage_path)
 
 
 if __name__ == "__main__":

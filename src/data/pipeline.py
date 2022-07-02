@@ -12,6 +12,9 @@ En luigi llame las funciones que ya creo.
 
 """
 
+
+
+
 if __name__ == "__main__":
 
     raise NotImplementedError("Implementar esta función")
