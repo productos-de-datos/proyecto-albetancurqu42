@@ -2,8 +2,6 @@ import pathlib
 
 import pandas as pd
 
-import utils
-
 base_path = pathlib.Path.cwd()
 landing_path = base_path.joinpath('data_lake/landing')
 raw_path = base_path.joinpath('data_lake/raw')
