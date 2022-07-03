@@ -49,7 +49,8 @@ def format_dataframe_prices(df_source):
 def clean_data(source_path=raw_path, target_path=cleansed_path):
     """Realice la limpieza y transformación de los archivos CSV.
 
-    Usando los archivos data_lake/raw/*.csv, cree el archivo data_lake/cleansed/precios-horarios.csv.
+    Usando los archivos data_lake/raw/*.csv, cree el archivo
+    data_lake/cleansed/precios-horarios.csv.
     Las columnas de este archivo son:
 
     * fecha: fecha en formato YYYY-MM-DD

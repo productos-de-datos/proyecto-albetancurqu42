@@ -25,7 +25,6 @@ def ingest_data(
         base_url=raw_data_base_url, initial_year: str = '1995', final_year: str = '2021',
         storage_base_path=landing_path
 ):
-    # TODO: Escribir docstring
     """Ingestion of external data to the landing layer of the data lake.
 
     Del repositorio jdvelasq/datalabs/precio_bolsa_nacional/xls/ descarge los

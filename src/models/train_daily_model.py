@@ -7,13 +7,17 @@ from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVR
 
-from utils import get_x_y, time_train_test_split, save_model_pickle
+from utils import (
+    get_x_y,
+    time_train_test_split,
+    save_model_pickle,
+    read_format_daily_prices,
+)
 
 base_path = pathlib.Path.cwd()
 business_path = base_path.joinpath("data_lake/business/features")
 features_path = base_path.joinpath("models")
 features_path.mkdir(exist_ok=True)
-print(features_path)
 
 model_parameters = (
     {
@@ -36,18 +40,14 @@ model_parameters = (
 model_parameters = model_parameters[0]
 
 
-def read_format_daily_prices(source_path):
-    df_source = pd.read_csv(source_path.joinpath("precios-diarios.csv"), index_col=0)
-    df_source.index = pd.to_datetime(df_source.index)
-    df_source = df_source.dropna()
-    return df_source
-
-
-def scale_dataframe(df_source, quantile_range=(10, 90)):
+def scale_dataframe(df_source, target_path, quantile_range=(10, 90)):
     scaler = preprocessing.RobustScaler(
         with_centering=True, with_scaling=True, quantile_range=quantile_range
     )
     scaler.fit(df_source)
+
+    model_path = target_path.joinpath("scaler_y.pkl")
+    save_model_pickle(scaler, model_path)
 
     output_scaled = scaler.transform(df_source)
     df_target = pd.DataFrame(
@@ -102,7 +102,7 @@ def train_daily_model(
 
     x_train, y_train, _, _ = time_train_test_split(x_source, y_source, gap)
 
-    y_train_scaled = scale_dataframe(y_train)
+    y_train_scaled = scale_dataframe(y_train, target_path)
 
     model = model_dict["estimator"]
     if train_with_grid is True:

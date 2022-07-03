@@ -1,5 +1,14 @@
 import pickle
 
+import pandas as pd
+
+
+def read_format_daily_prices(source_path):
+    df_source = pd.read_csv(source_path.joinpath("precios-diarios.csv"), index_col=0)
+    df_source.index = pd.to_datetime(df_source.index)
+    df_source = df_source.dropna()
+    return df_source
+
 
 def get_x_y(df_source, y_columns=None):
     if y_columns is None:
@@ -22,3 +31,9 @@ def time_train_test_split(x_all, y_all, gap, train_size=0.7):
 def save_model_pickle(model, model_path):
     with open(str(model_path), "wb") as output:
         pickle.dump(model, output)
+
+
+def load_model_pickle(model_path):
+    with open(str(model_path), "rb") as output:
+        model = pickle.load(output)
+        return model

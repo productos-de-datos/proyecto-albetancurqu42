@@ -69,7 +69,9 @@ class PipelineDailyPricesReport(Task):
         return PipelineCleanData()
 
     def output(self):
-        return LocalTarget(str(datalake_path.joinpath('business', 'result_compute_daily_prices.txt')))
+        return LocalTarget(
+            str(datalake_path.joinpath('business', 'result_compute_daily_prices.txt'))
+        )
 
     def run(self):
         with self.output().open("w") as outfile:
@@ -82,7 +84,9 @@ class PipelineMonthlyPricesReport(Task):
         return PipelineCleanData()
 
     def output(self):
-        return LocalTarget(str(datalake_path.joinpath('business', 'result_compute_monthly_prices.txt')))
+        return LocalTarget(
+            str(datalake_path.joinpath('business', 'result_compute_monthly_prices.txt'))
+        )
 
     def run(self):
         with self.output().open("w") as outfile:
