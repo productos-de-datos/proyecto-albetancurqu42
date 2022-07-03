@@ -1,11 +1,4 @@
-#
-# Evaluador
-# ---------------------------------------------------------------------------------------
-#
-# test_01: pylint
-# test_02: pytest
-# test_03: doctest
-#
+"""Grader Module."""
 import os
 import sys
 
