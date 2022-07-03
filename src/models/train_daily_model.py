@@ -11,7 +11,9 @@ from utils import get_x_y, time_train_test_split, save_model_pickle
 
 base_path = pathlib.Path.cwd()
 business_path = base_path.joinpath("data_lake/business/features")
-features_path = base_path.joinpath("src/models")
+features_path = base_path.joinpath("models")
+features_path.mkdir(exist_ok=True)
+print(features_path)
 
 model_parameters = (
     {
