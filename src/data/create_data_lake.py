@@ -16,9 +16,7 @@ def create_data_lake():
         parameter_name='path_list'
     )
 
-    print('ok')
     for folder in initial_folder_structure:
-        print(folder)
         folder = pathlib.Path(folder)
         utils.make_folder(folder)
 
