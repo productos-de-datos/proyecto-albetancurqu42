@@ -7,28 +7,28 @@ business_path = base_path.joinpath("data_lake/business")
 figures_path = base_path.joinpath("data_lake/business/reports/figures")
 
 
-def make_daily_prices_plot(source_path=business_path, target_path=figures_path):
+def make_monthly_prices_plot(source_path=business_path, target_path=figures_path):
     """Crea un grafico de lines que representa los precios promedios diarios.
 
     Usando el archivo data_lake/business/precios-diarios.csv, crea un grafico de
     lines que representa los precios promedios diarios.
 
-    El archivo se debe salvar en formato PNG en data_lake/business/reports/figures/daily_prices.png.
+    El archivo se debe salvar en formato PNG en data_lake/business/reports/figures/monthly_prices.png.
 
     """
-    df_daily_prices = read_format_prices(source_path, "precios-diarios.csv")
+    df_monthly_prices = read_format_prices(source_path, "precios-mensuales.csv")
 
     label_line = "Precio"
-    xlabel = "Fecha [días]"
+    xlabel = "Fecha [meses]"
     ylabel = "Precio [COP]"
-    tilte = "Precio promedio diario de la energía"
-    fig_path = target_path.joinpath("daily_prices.png")
+    tilte = "Precio promedio mensual de la energía"
+    fig_path = target_path.joinpath("monthly_prices.png")
 
-    make_prices_figure(df_daily_prices, fig_path, label_line, tilte, xlabel, ylabel)
+    make_prices_figure(df_monthly_prices, fig_path, label_line, tilte, xlabel, ylabel)
 
 
 if __name__ == "__main__":
     import doctest
 
-    make_daily_prices_plot()
+    make_monthly_prices_plot()
     doctest.testmod()
