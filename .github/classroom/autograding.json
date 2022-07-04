@@ -22,7 +22,7 @@
     },
     {
       "name": "Test 03",
-      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
+      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint openpyxl xlrd",
       "run": "python3 grader.py 03",
       "input": "",
       "output": "",
@@ -123,7 +123,7 @@
     {
       "name": "Test 13",
       "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
-      "run": "pylint",
+      "run": "pylint *.py",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -233,7 +233,7 @@
     {
       "name": "Test 24",
       "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
-      "run": "python3 src/models/train_daily_data.py",
+      "run": "python3 src/models/train_daily_model.py",
       "input": "",
       "output": "",
       "comparison": "included",
