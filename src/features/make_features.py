@@ -1,3 +1,4 @@
+"""Crea el archivo con los datos listo para realizar el entrenamiento del modelo"""
 import pathlib
 
 import pandas as pd
@@ -8,6 +9,7 @@ features_path = base_path.joinpath("data_lake/business/features")
 
 
 def lag_dataframe_column(df_source, column_to_lag="precio", n_lags=None):
+    """Rezaga la información un determinado número de días"""
     if n_lags is None:
         n_lags = [30, 60]
 
@@ -21,15 +23,9 @@ def lag_dataframe_column(df_source, column_to_lag="precio", n_lags=None):
 def make_features(source_path=business_path, target_path=features_path):
     """Prepara datos para pronóstico.
 
-    Cree el archivo data_lake/business/features/precios-diarios.csv. Este
+    Crea el archivo data_lake/business/features/precios-diarios.csv. Este
     archivo contiene la información para pronosticar los precios diarios de la
-    electricidad con base en los precios de los días pasados. Las columnas
-    correspoden a las variables explicativas del modelo, y debe incluir,
-    adicionalmente, la fecha del precio que se desea pronosticar y el precio
-    que se desea pronosticar (variable dependiente).
-
-    En la carpeta notebooks/ cree los notebooks de jupyter necesarios para
-    analizar y determinar las variables explicativas del modelo.
+    electricidad con base en los precios de los días pasados.
 
     """
 

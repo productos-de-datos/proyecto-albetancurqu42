@@ -1,3 +1,4 @@
+"""Calcula el precio de la energía mensual a partir de los precios horarios"""
 import pathlib
 
 from utils import read_format_hourly_prices, resample_hourly_prices
@@ -13,9 +14,9 @@ def compute_monthly_prices(
     source_filename="precios-horarios.csv",
     target_namefile="precios-mensuales.csv",
 ):
-    """Compute los precios promedios mensuales.
+    """Calcula los precios promedios mensuales.
 
-    Usando el archivo data_lake/cleansed/precios-horarios.csv, compute el prcio
+    Usando el archivo data_lake/cleansed/precios-horarios.csv, calcula el prcio
     promedio mensual. Las
     columnas del archivo data_lake/business/precios-mensuales.csv son:
 

@@ -1,3 +1,4 @@
+"""Crea un gráfico con los datos diarios del precio de la energía"""
 import pathlib
 
 from utils import read_format_prices, make_prices_figure
@@ -8,13 +9,11 @@ figures_path = base_path.joinpath("data_lake/business/reports/figures")
 
 
 def make_daily_prices_plot(source_path=business_path, target_path=figures_path):
-    """Crea un grafico de lines que representa los precios promedios diarios.
-
+    """Crea un grafico de lines que representa los precios promedios diarios
     Usando el archivo data_lake/business/precios-diarios.csv, crea un grafico de
     lines que representa los precios promedios diarios.
-
-    El archivo se debe salvar en formato PNG en data_lake/business/reports/figures/daily_prices.png.
-
+    El archivo se guarda en formato PNG en
+    data_lake/business/reports/figures/daily_prices.png.
     """
     df_daily_prices = read_format_prices(source_path, "precios-diarios.csv")
 

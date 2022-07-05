@@ -1,3 +1,5 @@
+"""Crea un gráfico con los datos mensuales del precio de la energía"""
+
 import pathlib
 
 from utils import read_format_prices, make_prices_figure
@@ -13,7 +15,8 @@ def make_monthly_prices_plot(source_path=business_path, target_path=figures_path
     Usando el archivo data_lake/business/precios-diarios.csv, crea un grafico de
     lines que representa los precios promedios diarios.
 
-    El archivo se debe salvar en formato PNG en data_lake/business/reports/figures/monthly_prices.png.
+    El archivo se debe salvar en formato PNG en
+    data_lake/business/reports/figures/monthly_prices.png.
 
     """
     df_monthly_prices = read_format_prices(source_path, "precios-mensuales.csv")

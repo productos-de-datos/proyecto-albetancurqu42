@@ -1,11 +1,13 @@
-import sys
-
-sys.path.append("src/data")
+"""Test de procesamiento de datos"""
 
 import pathlib
 
 import pandas as pd
 from pandas.testing import assert_frame_equal
+
+import sys
+
+sys.path.append("src/data")
 
 from compute_daily_prices import compute_daily_prices
 from compute_monthly_prices import compute_monthly_prices
@@ -16,8 +18,8 @@ cleansed_path = base_path.joinpath("tests/mocks")
 business_path = base_path.joinpath("tests/mocks")
 
 
-def test_compute_monthly_prices():
-
+def test_compute_daily_prices():
+    """Test de calculo de precios diarios"""
     compute_daily_prices(
         source_path=cleansed_path,
         target_path=business_path,
@@ -36,7 +38,7 @@ def test_compute_monthly_prices():
 
 
 def test_compute_monthly_prices():
-
+    """Test de calculo de precios mensuales"""
     compute_monthly_prices(
         source_path=cleansed_path,
         target_path=business_path,

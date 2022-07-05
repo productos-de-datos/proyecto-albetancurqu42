@@ -1,3 +1,4 @@
+"""Ejecuta el pronóstico"""
 import pathlib
 
 import pandas as pd
@@ -15,6 +16,7 @@ forecasts_path = base_path.joinpath("data_lake/business/forecasts")
 
 
 def predict_outputs(models_path, x_source):
+    """Realiza la predicción a partir de un archivo pkl dada"""
     model_path = models_path.joinpath("precios-diarios.pkl")
     model = load_model_pickle(model_path)
     y_predict = model.predict(x_source)
@@ -22,6 +24,7 @@ def predict_outputs(models_path, x_source):
 
 
 def de_escalate_outputs(models_path, y_predict, y_source):
+    """Regresa los resultados del modelo a la escala original de los datos"""
     scaler_path = models_path.joinpath("scaler_y.pkl")
     scaler_y = load_model_pickle(scaler_path)
     y_predict = scaler_y.inverse_transform(y_predict.reshape(-1, 1))
@@ -36,9 +39,9 @@ def make_forecasts(
     models_path=models_pickle_path,
     target_path=forecasts_path,
 ):
-    """Construya los pronosticos con el modelo entrenado final.
+    """Construye los pronosticos con el modelo entrenado final.
 
-    Cree el archivo data_lake/business/forecasts/precios-diarios.csv. Este
+    Crea el archivo data_lake/business/forecasts/precios-diarios.csv. Este
     archivo contiene tres columnas:
 
     * La fecha.

@@ -1,3 +1,4 @@
+"""Calcula el precio de la energía diario a partir de los precio horarios"""
 import pathlib
 
 from utils import read_format_hourly_prices, resample_hourly_prices
@@ -13,15 +14,14 @@ def compute_daily_prices(
     source_filename="precios-horarios.csv",
     target_namefile="precios-diarios.csv",
 ):
-    """Compute los precios promedios diarios.
+    """Calcula los precios promedios diarios.
 
-    Usando el archivo data_lake/cleansed/precios-horarios.csv, compute el precio
+    Usael archivo data_lake/cleansed/precios-horarios.csv, calcula el precio
     promedio diario (sobre las 24 horas del dia) para cada uno de los dias. Las
     columnas del archivo data_lake/business/precios-diarios.csv son:
 
     * fecha: fecha en formato YYYY-MM-DD
     * precio: precio promedio diario de la electricidad en la bolsa nacional
-
     """
 
     df_hourly_prices = read_format_hourly_prices(source_path, filename=source_filename)

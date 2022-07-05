@@ -1,15 +1,11 @@
 """
-Construya un pipeline de Luigi que:
+Ejecución de pipeline de Luigi que realiza las siguientes tareas:
 
-* Importe los datos xls
-* Transforme los datos xls a csv
-* Cree la tabla unica de precios horarios.
-* Calcule los precios promedios diarios
-* Calcule los precios promedios mensuales
-
-En luigi llame las funciones que ya creo.
-
-
+* Importa los datos xls
+* Transforma los datos xls a csv
+* Crea la tabla unica de precios horarios.
+* Calcula los precios promedios diarios
+* Calcula los precios promedios mensuales
 """
 
 import pathlib
@@ -25,12 +21,16 @@ from compute_monthly_prices import compute_monthly_prices
 
 
 base_path = pathlib.Path.cwd()
-datalake_path = base_path.joinpath('data_lake')
+datalake_path = base_path.joinpath("data_lake")
 
 
 class PipelineIngestData(Task):
+    """Realiza la ingesta de los datos en el pipeline"""
+
     def output(self):
-        return LocalTarget(str(datalake_path.joinpath('landing', 'result_ingest_data.txt')))
+        return LocalTarget(
+            str(datalake_path.joinpath("landing", "result_ingest_data.txt"))
+        )
 
     def run(self):
         with self.output().open("w") as outfile:
@@ -39,11 +39,15 @@ class PipelineIngestData(Task):
 
 
 class PipelineTransformData(Task):
+    """Realiza la transformación de los datos en el pipeline"""
+
     def requires(self):
         return PipelineIngestData()
 
     def output(self):
-        return LocalTarget(str(datalake_path.joinpath('raw', 'result_transform_data.txt')))
+        return LocalTarget(
+            str(datalake_path.joinpath("raw", "result_transform_data.txt"))
+        )
 
     def run(self):
         with self.output().open("w") as outfile:
@@ -52,11 +56,15 @@ class PipelineTransformData(Task):
 
 
 class PipelineCleanData(Task):
+    """Realiza la limpieza de los datos en el pipeline"""
+
     def requires(self):
         return PipelineTransformData()
 
     def output(self):
-        return LocalTarget(str(datalake_path.joinpath('cleansed', 'result_clean_data.txt')))
+        return LocalTarget(
+            str(datalake_path.joinpath("cleansed", "result_clean_data.txt"))
+        )
 
     def run(self):
         with self.output().open("w") as outfile:
@@ -65,12 +73,14 @@ class PipelineCleanData(Task):
 
 
 class PipelineDailyPricesReport(Task):
+    """Realiza la transformación de los datos a escala diaria en el pipeline"""
+
     def requires(self):
         return PipelineCleanData()
 
     def output(self):
         return LocalTarget(
-            str(datalake_path.joinpath('business', 'result_compute_daily_prices.txt'))
+            str(datalake_path.joinpath("business", "result_compute_daily_prices.txt"))
         )
 
     def run(self):
@@ -80,12 +90,14 @@ class PipelineDailyPricesReport(Task):
 
 
 class PipelineMonthlyPricesReport(Task):
+    """Realiza la transformación de los datos a escala mensual en el pipeline"""
+
     def requires(self):
         return PipelineCleanData()
 
     def output(self):
         return LocalTarget(
-            str(datalake_path.joinpath('business', 'result_compute_monthly_prices.txt'))
+            str(datalake_path.joinpath("business", "result_compute_monthly_prices.txt"))
         )
 
     def run(self):
@@ -95,6 +107,8 @@ class PipelineMonthlyPricesReport(Task):
 
 
 class ReportsPrices(Task):
+    """Ejecuta el pipeline"""
+
     def requires(self):
         return [PipelineDailyPricesReport(), PipelineMonthlyPricesReport()]
 

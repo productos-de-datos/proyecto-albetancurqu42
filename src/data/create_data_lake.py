@@ -1,3 +1,4 @@
+"""Crea la estrucutra de carpetas necesaria para el DataLake"""
 import pathlib
 import utils
 

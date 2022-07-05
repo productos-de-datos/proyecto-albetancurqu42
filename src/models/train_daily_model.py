@@ -1,3 +1,4 @@
+"""Modulo de entrenamiento de modelos"""
 import pathlib
 
 import pandas as pd
@@ -41,6 +42,7 @@ model_parameters = model_parameters[0]
 
 
 def scale_dataframe(df_source, target_path, quantile_range=(10, 90)):
+    """Escala los datos usando un rango de percentiles"""
     scaler = preprocessing.RobustScaler(
         with_centering=True, with_scaling=True, quantile_range=quantile_range
     )
@@ -57,6 +59,7 @@ def scale_dataframe(df_source, target_path, quantile_range=(10, 90)):
 
 
 def get_pipeline(model, quantile_range=(10, 90), n_components=10):
+    """Estructura el pipeline de los modelos"""
     scaler_pipeline = preprocessing.RobustScaler(
         with_centering=True, with_scaling=True, quantile_range=quantile_range
     )
@@ -70,7 +73,7 @@ def get_pipeline(model, quantile_range=(10, 90), n_components=10):
 def get_train_grid_search_cv(
     x_train, y_train, pipeline, grid_parameters, gap, n_splits=10
 ):
-
+    """Estructura la calibración de hiperparámetros"""
     tscv = TimeSeriesSplit(n_splits=n_splits, gap=gap)
     clf = GridSearchCV(
         estimator=pipeline,
@@ -94,8 +97,8 @@ def train_daily_model(
 ):
     """Entrena el modelo de pronóstico de precios diarios.
 
-    Con las features entrene el modelo de proóstico de precios diarios y
-    salvelo en models/precios-diarios.pkl
+    Con las features entrena el modelo de pronóstico de precios diarios y
+    lo guarda en models/precios-diarios.pkl
     """
     df_daily_prices = read_format_daily_prices(source_path)
     x_source, y_source = get_x_y(df_daily_prices)
